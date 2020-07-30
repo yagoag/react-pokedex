@@ -20,6 +20,7 @@ const Container = styled.div`
     font-size: 12px;
     min-width: 1.2rem;
     margin: 6px 0 0 -10px;
+    padding: 0 2px;
     text-align: center;
     border: 2px solid #141414;
     border-radius: 50vh;
@@ -35,8 +36,8 @@ const Container = styled.div`
     width: 0;
     height: 0;
     border: 8px solid transparent;
-    border-left-color: white;
-    border-bottom-color: white;
+    border-left-color: #9b1818;
+    border-bottom-color: #9b1818;
     align-self: flex-start;
   }
 `;
@@ -69,6 +70,9 @@ const Picture = styled.img`
 `;
 
 const Name = styled.div`
+  color: #141414;
+  font-weight: 600;
+  font-size: 14px;
   text-align: center;
   text-transform: capitalize;
   margin: 4px 0 -4px 0;

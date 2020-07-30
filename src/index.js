@@ -11,6 +11,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #e2e2e2;
 }
 
 code {
@@ -24,5 +25,5 @@ ReactDOM.render(
     <GlobalStyle />
     <Routes />
   </React.StrictMode>,
-  document.getElementById('root'),
+  document.getElementById('root')
 );
