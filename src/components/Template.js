@@ -99,6 +99,7 @@ const SearchContainer = styled.div`
   padding-left: 48px;
   display: flex;
   align-items: center;
+  border-top-right-radius: 6px;
 
   @media (max-width: 550px) {
     justify-content: center;

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { getPokemonList, PAGE_SIZE } from '../api';
 import PokeCard from '../components/PokeCard';
-import styled from 'styled-components';
-import Template from '../components/Template';
 
 const getNumberFromUrl = (url) => {
   const splittedUrl = url.split('/');
@@ -37,7 +36,7 @@ const List = () => {
   if (!data) return <div>Houston, we have a problem...</div>;
 
   return (
-    <Template>
+    <>
       <Grid>
         {data.results.map((res) => {
           const id = getNumberFromUrl(res.url);
@@ -60,7 +59,7 @@ const List = () => {
       >
         Next page
       </button>
-    </Template>
+    </>
   );
 };
 
