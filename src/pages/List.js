@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getPokemonList, PAGE_SIZE } from '../api';
+import PokeCard from '../components/PokeCard';
 
 const getNumberFromUrl = (url) => {
   const splittedUrl = url.split('/');
@@ -32,17 +33,7 @@ const List = () => {
       {data.results.map((res) => {
         const id = getNumberFromUrl(res.url);
 
-        return (
-          <div key={id}>
-            <img
-              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
-              alt={`front sprite of ${res.name}`}
-            />
-            <p>
-              {id}. {res.name}
-            </p>
-          </div>
-        );
+        return <PokeCard key={id} number={id} name={res.name} />;
       })}
       <button
         onClick={() => page > 1 && setPage(page - 1)}
