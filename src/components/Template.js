@@ -63,7 +63,7 @@ const CameraLens = styled.div`
   }
 `;
 
-const HeaderButton = styled.div`
+export const HeaderButton = styled.div`
   width: 16px;
   height: 16px;
   border: 2px solid #141414;

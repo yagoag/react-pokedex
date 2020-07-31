@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getPokemonDetails } from '../api';
 import PokeCard from '../components/PokeCard';
 import styled from 'styled-components';
+import Evolutions from '../components/Evolutions';
 
 const Container = styled.div`
   display: flex;
@@ -16,6 +17,7 @@ const Grid = styled.div`
   background-color: #141414;
   border-radius: 4px;
   padding: 2px;
+  margin-bottom: 16px;
 `;
 
 const Overview = styled.div`
@@ -68,13 +70,14 @@ const Details = () => {
           </div>
         </Overview>
         <Grid>
-          {data.stats.map((stat) => (
-            <Stat>
+          {data.stats.map((stat, index) => (
+            <Stat key={index}>
               <div>{stat.stat.name.replace('-', ' ')}</div>
               <div>{stat.base_stat}</div>
             </Stat>
           ))}
         </Grid>
+        <Evolutions number={id} />
       </div>
     </Container>
   );
