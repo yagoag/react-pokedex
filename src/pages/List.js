@@ -5,15 +5,7 @@ import PokeCard from '../components/PokeCard';
 import { Link } from 'react-router-dom';
 import Spinner from '../components/Spinner';
 import ErrorMessage from '../components/ErrorMessage';
-
-const getNumberFromUrl = (url) => {
-  const splittedUrl = url.split('/');
-  const lastIndex = splittedUrl.length - 1;
-
-  return splittedUrl[lastIndex] !== ''
-    ? splittedUrl[lastIndex]
-    : splittedUrl[lastIndex - 1];
-};
+import { getNumberFromUrl } from '../utils';
 
 const Grid = styled.div`
   display: grid;

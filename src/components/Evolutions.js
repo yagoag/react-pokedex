@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { getPokemonSpecies, getFromApi } from '../api';
 import styled from 'styled-components';
 import { HeaderButton } from './Template';
@@ -86,10 +86,10 @@ const Evolutions = ({ number }) => {
       </Title>
       <StagesContainer>
         {evolutionChain.map((stage, index) => (
-          <>
+          <Fragment key={index}>
             <Stage>{stage}</Stage>
             {index !== evolutionChain.length - 1 && <Arrow />}
-          </>
+          </Fragment>
         ))}
       </StagesContainer>
     </>

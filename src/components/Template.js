@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import Search from './Search';
 
 const Container = styled.div`
   max-width: 760px;
@@ -108,17 +110,6 @@ const SearchContainer = styled.div`
   }
 `;
 
-const SearchInput = styled.input.attrs({
-  type: 'text',
-  placeholder: 'Search by number or name',
-})`
-  width: 240px;
-  border: 2px solid #141414;
-  border-radius: 4px;
-  font-size: 16px;
-  padding: 6px 8px;
-`;
-
 const Content = styled.main`
   background-color: #9b1818;
   margin: -32px 8px 8px 8px;
@@ -132,15 +123,15 @@ const Template = ({ children }) => (
   <Container>
     <Header>
       <LensContainer>
-        <a href="/">
+        <Link to="/">
           <CameraLens />
-        </a>
+        </Link>
         <HeaderButton color="red" />
         <HeaderButton color="yellow" />
         <HeaderButton color="green" />
       </LensContainer>
       <SearchContainer>
-        <SearchInput />
+        <Search />
       </SearchContainer>
     </Header>
     <Content>{children}</Content>

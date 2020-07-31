@@ -1,11 +1,22 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const Spinner = styled.div`
-  width: 24px;
-  height: 24px;
-  border-radius: 32px;
-  border: 8px solid #141414;
-  border-bottom: 8px solid transparent;
+  ${(props) =>
+    props.size === 'small'
+      ? css`
+          width: 16px;
+          height: 16px;
+          border-radius: 22px;
+          border: 6px solid #141414;
+        `
+      : css`
+          width: 24px;
+          height: 24px;
+          border-radius: 32px;
+          border: 8px solid #141414;
+        `}
+
+  border-bottom-color: transparent;
   animation: spin ease 1s infinite;
   margin: 16px auto;
 

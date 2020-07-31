@@ -6,15 +6,15 @@ import NotFound from './pages/NotFound';
 import Template from './components/Template';
 
 const Routes = () => (
-  <Template>
-    <BrowserRouter>
+  <BrowserRouter>
+    <Template>
       <Switch>
         <Route path="/" exact component={List} />
         <Route path="/details/:id" exact component={Details} />
         <Route component={NotFound} />
       </Switch>
-    </BrowserRouter>
-  </Template>
+    </Template>
+  </BrowserRouter>
 );
 
 export default Routes;
