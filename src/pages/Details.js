@@ -10,11 +10,16 @@ import Spinner from '../components/Spinner';
 const Container = styled.div`
   display: flex;
   justify-content: space-evenly;
+
+  @media (max-width: 550px) {
+    flex-direction: column;
+    align-content: center;
+  }
 `;
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, minmax(100px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 2px;
   background-color: #141414;
   border-radius: 4px;
@@ -34,6 +39,10 @@ const Overview = styled.div`
 
   > div:not(:last-child) {
     margin-bottom: 8px;
+  }
+
+  @media (max-width: 550px) {
+    margin-top: 16px;
   }
 `;
 
