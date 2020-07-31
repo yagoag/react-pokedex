@@ -19,6 +19,41 @@ const Grid = styled.div`
   justify-items: center;
 `;
 
+const PaginationContainer = styled.div`
+  display: flex;
+  align-items: center;
+  background-color: #2eaf1f;
+  width: fit-content;
+  padding: 16px 8px;
+  border: 2px solid #141414;
+  border-radius: 4px;
+  margin: 24px auto 0 auto;
+`;
+
+const PageButton = styled.button`
+  width: 0;
+  height: 0;
+  background: none;
+  border: 12px solid transparent;
+  border-left: 12px solid #141414;
+  border-right: none;
+  margin-left: ${(props) => !props.left && '12px'};
+  margin-right: ${(props) => props.left && '12px'};
+  transform: scaleX(2) ${(props) => props.left && 'rotate(180deg)'};
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+`;
+
+const PageCounter = styled.div`
+  margin: 0 16px;
+  font-size: 14px;
+  font-weight: 600;
+`;
+
 const List = () => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState();
@@ -44,21 +79,25 @@ const List = () => {
           return <PokeCard key={id} number={id} name={res.name} />;
         })}
       </Grid>
-      <button
-        onClick={() => page > 1 && setPage(page - 1)}
-        disabled={page <= 1}
-      >
-        Previous page
-      </button>{' '}
-      |{' '}
-      <button
-        onClick={() =>
-          page < Math.ceil(data.count / PAGE_SIZE) && setPage(page + 1)
-        }
-        disabled={page >= Math.ceil(data.count / PAGE_SIZE)}
-      >
-        Next page
-      </button>
+
+      <PaginationContainer>
+        <PageButton
+          left
+          title="Previous page"
+          onClick={() => page > 1 && setPage(page - 1)}
+          disabled={page <= 1}
+        />
+        <PageCounter>
+          Page {page}/{Math.ceil(data.count / PAGE_SIZE)}
+        </PageCounter>
+        <PageButton
+          title="Next page"
+          onClick={() =>
+            page < Math.ceil(data.count / PAGE_SIZE) && setPage(page + 1)
+          }
+          disabled={page >= Math.ceil(data.count / PAGE_SIZE)}
+        />
+      </PaginationContainer>
     </>
   );
 };
