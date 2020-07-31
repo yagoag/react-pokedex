@@ -88,7 +88,9 @@ const Details = () => {
         <Grid>
           {data.stats.map((stat, index) => (
             <Stat key={index}>
-              <div>{stat.stat.name.replace('-', ' ')}</div>
+              <div>
+                {stat.stat.name.replace('-', ' ').replace(/^hp$/i, 'HP')}
+              </div>
               <div>{stat.base_stat}</div>
             </Stat>
           ))}
