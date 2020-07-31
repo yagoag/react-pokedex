@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { getPokemonList, PAGE_SIZE } from '../api';
 import PokeCard from '../components/PokeCard';
+import { Link } from 'react-router-dom';
 
 const getNumberFromUrl = (url) => {
   const splittedUrl = url.split('/');
@@ -17,6 +18,10 @@ const Grid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   grid-gap: 24px;
   justify-items: center;
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
 `;
 
 const PaginationContainer = styled.div`
@@ -75,8 +80,11 @@ const List = () => {
       <Grid>
         {data.results.map((res) => {
           const id = getNumberFromUrl(res.url);
-
-          return <PokeCard key={id} number={id} name={res.name} />;
+          return (
+            <StyledLink key={id} to={`/details/${id}`}>
+              <PokeCard number={id} name={res.name} />
+            </StyledLink>
+          );
         })}
       </Grid>
 

@@ -24,6 +24,8 @@ const getFromApi = async (endpoint) => {
 export const getPokemonList = (page = 1) =>
   getFromApi(`/pokemon?limit=${PAGE_SIZE}&offset=${(page - 1) * PAGE_SIZE}`);
 
+export const getPokemonDetails = (id) => getFromApi(`/pokemon/${id}`);
+
 export const getAllPokemons = async () => {
   const storedList =
     localStorage.getItem('all_pokemons') &&

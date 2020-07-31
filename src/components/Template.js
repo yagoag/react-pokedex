@@ -132,7 +132,9 @@ const Template = ({ children }) => (
   <Container>
     <Header>
       <LensContainer>
-        <CameraLens />
+        <a href="/">
+          <CameraLens />
+        </a>
         <HeaderButton color="red" />
         <HeaderButton color="yellow" />
         <HeaderButton color="green" />
