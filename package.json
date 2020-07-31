@@ -1,7 +1,7 @@
 {
   "name": "react-pokedex",
   "version": "0.1.0",
-  "homepage": "https://yagoag.com/react-pokedex",
+  "homepage": "https://pokedex-yago.netlify.app/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "4.2.4",
