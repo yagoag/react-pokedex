@@ -92,7 +92,12 @@ const Search = () => {
 
   return (
     <div>
-      <SearchInput onChange={handleSearch} onClick={() => setSearching(true)} />
+      <SearchInput
+        onChange={handleSearch}
+        onClick={() => setSearching(true)}
+        // Timeout to prevent results from closing before click is processed by the result link itself
+        onBlur={() => setTimeout(() => setSearching(false), 500)}
+      />
       {searching && (
         <SearchResults>
           {loading ? (
@@ -103,11 +108,7 @@ const Search = () => {
             <Result>No results</Result>
           ) : (
             results.slice(0, 5).map((res) => (
-              <StyledLink
-                key={res.number}
-                to={`/details/${res.number}`}
-                onClick={() => setSearching(false)}
-              >
+              <StyledLink key={res.number} to={`/details/${res.number}`}>
                 <Result>{res.name}</Result>
               </StyledLink>
             ))
