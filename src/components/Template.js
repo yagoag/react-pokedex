@@ -102,6 +102,7 @@ const SearchContainer = styled.div`
   border-top-right-radius: 6px;
 
   @media (max-width: 550px) {
+    border-top-right-radius: 0;
     justify-content: center;
     padding: 0 0 24px 0;
   }
