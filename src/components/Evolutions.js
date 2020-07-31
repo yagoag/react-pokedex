@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { getPokemonSpecies, getFromApi } from '../api';
 import styled from 'styled-components';
 import { HeaderButton } from './Template';
+import Spinner from './Spinner';
+import ErrorMessage from './ErrorMessage';
 
 const Title = styled.div`
   font-size: 16px;
@@ -40,33 +42,41 @@ const Arrow = styled.div`
 const Evolutions = ({ number }) => {
   const [evolutionChain, setEvolutionChain] = useState();
   const [loading, setLoading] = useState();
+  const [error, setError] = useState();
 
   useEffect(() => {
     (async () => {
       setLoading(true);
-      const evolutionChainUrl = (await getPokemonSpecies(number)).body
-        .evolution_chain.url;
-      const data = (await getFromApi(evolutionChainUrl, false)).body;
+      try {
+        const evolutionChainUrl = (await getPokemonSpecies(number)).body
+          .evolution_chain.url;
+        const data = (await getFromApi(evolutionChainUrl, false)).body;
 
-      const chain = [];
-      let cur = data.chain;
-      let hasNext = true;
-      do {
-        chain.push(cur.species.name);
-        if (cur.evolves_to.length) {
-          cur = cur.evolves_to[0];
-        } else {
-          hasNext = false;
-        }
-      } while (hasNext);
+        const chain = [];
+        let cur = data.chain;
+        let hasNext = true;
+        do {
+          chain.push(cur.species.name);
+          if (cur.evolves_to.length) {
+            cur = cur.evolves_to[0];
+          } else {
+            hasNext = false;
+          }
+        } while (hasNext);
 
-      setEvolutionChain(chain);
+        setEvolutionChain(chain);
+      } catch (e) {
+        setError(
+          'We had a problem reaching the server. Please try again in a few moments.'
+        );
+      }
 
       setLoading(false);
     })();
   }, [number]);
 
-  if (!evolutionChain || loading) return 'Loading...';
+  if (!evolutionChain || loading) return <Spinner />;
+  if (error) return <ErrorMessage>{error}</ErrorMessage>;
 
   return (
     <>

@@ -4,6 +4,8 @@ import { getPokemonDetails } from '../api';
 import PokeCard from '../components/PokeCard';
 import styled from 'styled-components';
 import Evolutions from '../components/Evolutions';
+import ErrorMessage from '../components/ErrorMessage';
+import Spinner from '../components/Spinner';
 
 const Container = styled.div`
   display: flex;
@@ -51,12 +53,17 @@ const Details = () => {
   useEffect(() => {
     (async () => {
       setLoading(true);
-      setData((await getPokemonDetails(id)).body);
+      try {
+        setData((await getPokemonDetails(id)).body);
+      } catch (e) {
+        setData({ error: 'Pokémon not found.' });
+      }
       setLoading(false);
     })();
   }, [id]);
 
-  if (loading || !data) return <div>Loading...</div>;
+  if (loading || !data) return <Spinner />;
+  if (data.error) return <ErrorMessage>{data.error}</ErrorMessage>;
 
   return (
     <Container>

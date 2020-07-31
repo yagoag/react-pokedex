@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { getPokemonList, PAGE_SIZE } from '../api';
 import PokeCard from '../components/PokeCard';
 import { Link } from 'react-router-dom';
+import Spinner from '../components/Spinner';
+import ErrorMessage from '../components/ErrorMessage';
 
 const getNumberFromUrl = (url) => {
   const splittedUrl = url.split('/');
@@ -67,13 +69,20 @@ const List = () => {
   useEffect(() => {
     (async () => {
       setLoading(true);
-      setData((await getPokemonList(page)).body);
+      try {
+        setData((await getPokemonList(page)).body);
+      } catch (e) {
+        setData({
+          error:
+            'We had a problem reaching the server. Please try again in a few moments.',
+        });
+      }
       setLoading(false);
     })();
   }, [page]);
 
-  if (loading) return <div>Loading...</div>;
-  if (!data) return <div>Houston, we have a problem...</div>;
+  if (loading || !data) return <Spinner />;
+  if (data.error) return <ErrorMessage>{data.error}</ErrorMessage>;
 
   return (
     <>
