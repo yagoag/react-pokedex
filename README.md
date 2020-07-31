@@ -1,8 +1,12 @@
 <div align="center">
 
+<img src="./pokedex-preview.png" width="500" alt="Pokedex website running on a smartphone and on a laptop, side-by-side" />
+
 # React Pokedex
 
 </div>
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/22131ea0-604f-4151-8e11-bd7645d902fc/deploy-status)](https://app.netlify.com/sites/pokedex-yago/deploys)
 
 ## Run locally
 
