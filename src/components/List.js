@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { getPokemonList, PAGE_SIZE } from '../api';
+import { PAGE_SIZE } from '../api';
 import PokeCard from '../components/PokeCard';
 import { Link } from 'react-router-dom';
 import Spinner from '../components/Spinner';
@@ -53,25 +53,12 @@ const PageCounter = styled.div`
   font-weight: 600;
 `;
 
-const List = () => {
-  const [data, setData] = useState();
-  const [loading, setLoading] = useState();
+const List = ({ data, loading, onPageChange }) => {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    (async () => {
-      setLoading(true);
-      try {
-        setData((await getPokemonList(page)).body);
-      } catch (e) {
-        setData({
-          error:
-            'We had a problem reaching the server. Please try again in a few moments.',
-        });
-      }
-      setLoading(false);
-    })();
-  }, [page]);
+    if (onPageChange) onPageChange(page);
+  }, [page, onPageChange]);
 
   if (loading || !data) return <Spinner />;
   if (data.error) return <ErrorMessage>{data.error}</ErrorMessage>;
@@ -80,7 +67,7 @@ const List = () => {
     <>
       <Grid>
         {data.results.map((res) => {
-          const id = getNumberFromUrl(res.url);
+          const id = res.id || getNumberFromUrl(res.url);
           return (
             <StyledLink key={id} to={`/details/${id}`}>
               <PokeCard number={id} name={res.name} />

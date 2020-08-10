@@ -2,8 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Search from './Search';
+import Heart from './Heart';
 
 const Container = styled.div`
+  min-width: 360px;
   max-width: 760px;
   align-self: center;
   margin: 0 auto;
@@ -102,10 +104,10 @@ const SearchContainer = styled.div`
   display: flex;
   align-items: center;
   border-top-right-radius: 6px;
+  justify-content: space-evenly;
 
   @media (max-width: 600px) {
     border-top-right-radius: 0;
-    justify-content: center;
     padding: 0 0 24px 0;
   }
 `;
@@ -132,6 +134,9 @@ const Template = ({ children }) => (
       </LensContainer>
       <SearchContainer>
         <Search />
+        <Link to="/favorites">
+          <Heart />
+        </Link>
       </SearchContainer>
     </Header>
     <Content>{children}</Content>
