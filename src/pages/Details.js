@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Evolutions from '../components/Evolutions';
 import ErrorMessage from '../components/ErrorMessage';
 import Spinner from '../components/Spinner';
+import Heart from '../components/Heart';
 
 const Container = styled.div`
   display: flex;
@@ -15,6 +16,32 @@ const Container = styled.div`
     flex-direction: column;
     align-content: center;
   }
+`;
+
+const Sidebar = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+`;
+
+const HeartContainer = styled.div`
+  border: 2px solid #141414;
+  background-color: #2eaf1f;
+  border-radius: 4px;
+  margin-top: 16px;
+  padding: 8px;
+`;
+
+const FavoriteMessage = styled.div`
+  color: #141414;
+  width: 110px;
+  text-align: center;
+  margin-top: ${(props) => props.hasMessage && '12px'};
+  height: ${(props) => (props.hasMessage ? '2.2rem' : 0)};
+  opacity: ${(props) => (props.hasMessage ? 1 : 0)};
+  transition-property: height, margin, opacity;
+  transition-duration: 400ms;
+  transition-timing-function: ease-in-out;
 `;
 
 const Grid = styled.div`
@@ -58,6 +85,11 @@ const Details = () => {
   const { id } = useParams();
   const [data, setData] = useState();
   const [loading, setLoading] = useState();
+  const [savedMessage, setSavedMessage] = useState(null);
+  const [isFavorite, setIsFavorite] = useState({
+    value: false,
+    changed: false,
+  });
 
   useEffect(() => {
     (async () => {
@@ -68,15 +100,69 @@ const Details = () => {
         setData({ error: 'Pokémon not found.' });
       }
       setLoading(false);
+
+      if (id) {
+        const savedToStore = localStorage.getItem('favorite_pokemons');
+        setIsFavorite({
+          value:
+            savedToStore &&
+            JSON.parse(savedToStore).find((pokemon) => pokemon.id === id),
+          changed: false,
+        });
+      }
     })();
   }, [id]);
+
+  useEffect(() => {
+    if (isFavorite.changed) {
+      setSavedMessage(
+        isFavorite.value ? 'Saved to favorites' : 'Removed from favorites'
+      );
+      const clearMessage = setTimeout(() => setSavedMessage(null), 5000);
+
+      return () => clearTimeout(clearMessage);
+    }
+  }, [isFavorite]);
+
+  const toggleFavorite = () => {
+    const { name } = data;
+    const savedToStore = localStorage.getItem('favorite_pokemons');
+    const previouslySaved = savedToStore ? JSON.parse(savedToStore) : [];
+    const wasSaved = previouslySaved.find((pokemon) => pokemon.id === id);
+
+    if (!wasSaved) {
+      previouslySaved.push({ id, name });
+      localStorage.setItem(
+        'favorite_pokemons',
+        JSON.stringify(previouslySaved)
+      );
+      setIsFavorite({ value: true, changed: true });
+    } else {
+      const filteredFavorites = previouslySaved.filter(
+        (pokemon) => pokemon.id !== id
+      );
+      localStorage.setItem(
+        'favorite_pokemons',
+        JSON.stringify(filteredFavorites)
+      );
+      setIsFavorite({ value: false, changed: true });
+    }
+  };
 
   if (loading || !data) return <Spinner />;
   if (data.error) return <ErrorMessage>{data.error}</ErrorMessage>;
 
   return (
     <Container>
-      <PokeCard number={id} name={data.name} />
+      <Sidebar>
+        <PokeCard number={id} name={data.name} />
+        <HeartContainer>
+          <Heart inactive={!isFavorite.value} onClick={toggleFavorite} />
+          <FavoriteMessage hasMessage={!!savedMessage}>
+            {savedMessage}
+          </FavoriteMessage>
+        </HeartContainer>
+      </Sidebar>
       <div>
         <Overview>
           <div>Height: {(data.height / 10).toFixed(1)}m</div>
