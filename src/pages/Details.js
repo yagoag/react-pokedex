@@ -12,7 +12,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-evenly;
 
-  @media (max-width: 550px) {
+  @media (max-width: 600px) {
     flex-direction: column;
     align-content: center;
   }
@@ -21,7 +21,7 @@ const Container = styled.div`
 const Sidebar = styled.div`
   display: flex;
   flex-direction: column;
-  align-content: center;
+  align-items: center;
 `;
 
 const HeartContainer = styled.div`
@@ -68,7 +68,7 @@ const Overview = styled.div`
     margin-bottom: 8px;
   }
 
-  @media (max-width: 550px) {
+  @media (max-width: 600px) {
     margin-top: 16px;
   }
 `;

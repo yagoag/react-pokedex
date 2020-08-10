@@ -16,6 +16,10 @@ const StagesContainer = styled.div`
   display: flex;
   margin-top: 8px;
   align-items: center;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 const Stage = styled.div`
@@ -37,6 +41,10 @@ const Arrow = styled.div`
   border-right: none;
   margin: 0 12px;
   transform: scaleX(2);
+
+  @media (max-width: 600px) {
+    transform: rotate(90deg);
+  }
 `;
 
 const Evolutions = ({ number }) => {
